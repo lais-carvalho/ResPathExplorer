@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock
 import os
 import tempfile
 import pandas as pd
-from src.ResPathExplorer import CARDAnalysis
+from src.ResPathExplorer.CARDAnalysis import CARDAnalysis
 
 
 class TestCARDAnalysis(unittest.TestCase):

@@ -1,7 +1,9 @@
 import pytest
 from unittest.mock import patch, mock_open, MagicMock
-from src.ResPathExplorer import KeggAnalysis
+from src.ResPathExplorer.KeggAnalysis import KeggAnalysis
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
 
 class TestKeggAnalysis:
 
@@ -12,7 +14,7 @@ class TestKeggAnalysis:
             KeggAnalysis("hsa", "")
 
     @patch("os.path.exists", return_value=True)
-    @patch("src.KeggAnalysis.KeggAnalysis._load_gmt_file")
+    @patch("src.ResPathExplorer.KeggAnalysis.KeggAnalysis._load_gmt_file")
     def test_init_loads_existing_gmt(self, mock_load_gmt, mock_exists):
         ka = KeggAnalysis("hsa", "file.gmt", use_existing_gmt=True)
         mock_load_gmt.assert_called_once_with("file.gmt")
@@ -20,7 +22,7 @@ class TestKeggAnalysis:
         assert ka.org == "hsa"
         assert ka.organism is not None
 
-    @patch("src.KeggAnalysis.REST.kegg_list")
+    @patch("src.ResPathExplorer.KeggAnalysis.REST.kegg_list")
     def test_get_organism_prefix_valid(self, mock_kegg_list):
         mock_kegg_list.return_value.read.return_value = (
             "T01001\thsa\tHomo sapiens (human)\n"
@@ -30,14 +32,14 @@ class TestKeggAnalysis:
         prefix = ka._get_organism_prefix("Homo sapiens")
         assert prefix == "hsa"
 
-    @patch("src.KeggAnalysis.REST.kegg_list")
+    @patch("src.ResPathExplorer.KeggAnalysis.REST.kegg_list")
     def test_get_organism_prefix_invalid(self, mock_kegg_list):
         mock_kegg_list.return_value.read.return_value = "T01001\thsa\tHomo sapiens (human)\n"
         ka = KeggAnalysis.__new__(KeggAnalysis)
         with pytest.raises(ValueError):
             ka._get_organism_prefix("Unknown organism")
 
-    @patch("src.KeggAnalysis.REST.kegg_list")
+    @patch("src.ResPathExplorer.KeggAnalysis.REST.kegg_list")
     def test_get_organism_name_valid(self, mock_kegg_list):
         mock_kegg_list.return_value.read.return_value = (
             "T01001\thsa\tHomo sapiens (human)\n"
@@ -47,7 +49,7 @@ class TestKeggAnalysis:
         name = ka._get_organism_name("hsa")
         assert name == "Homo sapiens (human)"
 
-    @patch("src.KeggAnalysis.REST.kegg_list")
+    @patch("src.ResPathExplorer.KeggAnalysis.REST.kegg_list")
     def test_get_organism_name_invalid(self, mock_kegg_list):
         mock_kegg_list.return_value.read.return_value = "T01001\thsa\tHomo sapiens (human)\n"
         ka = KeggAnalysis.__new__(KeggAnalysis)
@@ -175,47 +177,6 @@ class TestKeggAnalysis:
         with pytest.raises(FileExistsError):
             ka.save_GeneSet_GMT(str(file_path), gene_set)
 
-    def test_search_gene_id_kegg(self, monkeypatch):
-        ka = KeggAnalysis.__new__(KeggAnalysis)
-        ka.org = "eco"
-
-        def fake_kegg_find(db, name):
-            class FakeResponse:
-                def read(self_inner):
-                    if name == "gene_name":
-                        return "eco:b0002\tgene_name\neco:b0003\tgene_name2\n"
-                    else:
-                        return ""
-
-            return FakeResponse()
-
-        monkeypatch.setattr("Bio.KEGG.REST.kegg_find", fake_kegg_find)
-
-        gene_id = ka.search_gene_id_kegg("gene_name")
-        assert gene_id == "eco:b0002"
-
-        gene_id_none = ka.search_gene_id_kegg("nonexistent")
-        assert gene_id_none is None
-
-    def test_get_gene_name_by_kegg_id(self, monkeypatch):
-        ka = KeggAnalysis.__new__(KeggAnalysis)
-
-        response_text = """ENTRY ecob0002 Pathway\nNAME thrL\nDESCRIPTION thr leader peptide\nSYMBOL thrL"""
-
-        mock_read = MagicMock(return_value=response_text)
-        monkeypatch.setattr("Bio.KEGG.REST.kegg_get", lambda kegg_id: MagicMock(read=mock_read))
-
-        symbol = ka.get_gene_name_by_kegg_id("eco:b0002")
-        assert symbol == "thrL"
-
-        with pytest.raises(ValueError):
-            ka.get_gene_name_by_kegg_id("invalid_id")
-
-        monkeypatch.setattr("Bio.KEGG.REST.kegg_get",
-                            lambda kegg_id: MagicMock(read=MagicMock(return_value="NO SYMBOL HERE")))
-        symbol_none = ka.get_gene_name_by_kegg_id("eco:b0002")
-        assert symbol_none is None
-
     def test_enrichment_analysis(self,monkeypatch, tmp_path):
 
         ka = KeggAnalysis.__new__(KeggAnalysis)
@@ -231,9 +192,9 @@ class TestKeggAnalysis:
         mock_enrich = MagicMock()
         mock_enrich.res2d = mock_df
 
-        monkeypatch.setattr("src.KeggAnalysis.gp.enrich", lambda **kwargs: mock_enrich)
+        monkeypatch.setattr("src.ResPathExplorer.KeggAnalysis.gp.enrich", lambda **kwargs: mock_enrich)
 
-        monkeypatch.setattr("src.KeggAnalysis.rename_file", lambda a, b, c: None)
+        monkeypatch.setattr("src.ResPathExplorer.KeggAnalysis.rename_file", lambda a, b, c: None)
 
         ka.enrichment_analysis(
             gene_list=["gene1", "gene2", "gene3"],

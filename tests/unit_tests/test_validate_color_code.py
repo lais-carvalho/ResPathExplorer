@@ -1,5 +1,5 @@
 from unittest import TestCase
-from src.ResPathExplorer import validate_color_code
+from src.ResPathExplorer.validate_color_code import validate_color_code
 
 
 class TestValidateColorCode(TestCase):

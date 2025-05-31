@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, mock_open, MagicMock
 import pandas as pd
 from io import StringIO
-from src.ResPathExplorer import VFDBAnalysis
+from src.ResPathExplorer.VFDBAnalysis import VFDBAnalysis
 
 
 class TestVFDBAnalysis(unittest.TestCase):

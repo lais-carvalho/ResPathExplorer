@@ -1,11 +1,11 @@
 import unittest
 from unittest.mock import patch
-from src import get_url_pathway
+from src.ResPathExplorer.URL_pathway import get_url_pathway
 
 class TestGetUrlPathway(unittest.TestCase):
 
     def test_valid_input_without_gene_colors(self):
-        with patch("src.URL_pathway.KEGG.show_pathway") as mock_show:
+        with patch("src.ResPathExplorer.URL_pathway.KEGG.show_pathway") as mock_show:
             mock_show.return_value = "http://dummy-url"
             url = get_url_pathway("hsa04110")
             self.assertEqual(url, "http://dummy-url")
@@ -16,7 +16,7 @@ class TestGetUrlPathway(unittest.TestCase):
             "TP53": "#FF0000,#000000",
             "BRCA1": "blue,#00FF00"
         }
-        with patch("src.URL_pathway.KEGG.show_pathway") as mock_show:
+        with patch("src.ResPathExplorer.URL_pathway.KEGG.show_pathway") as mock_show:
             mock_show.return_value = "http://dummy-colored-url"
             url = get_url_pathway("hsa04110", gene_colors)
             self.assertEqual(url, "http://dummy-colored-url")

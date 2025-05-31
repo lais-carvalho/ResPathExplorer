@@ -3,7 +3,7 @@ import os
 import pandas as pd
 from tempfile import TemporaryDirectory
 
-from src.ResPathExplorer import save_df_as_html
+from src.ResPathExplorer.save_df_as_html import save_df_as_html
 
 
 class TestSaveDfAsHtml(unittest.TestCase):

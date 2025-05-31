@@ -1,7 +1,7 @@
 import os
 import tempfile
 from unittest import TestCase
-from src.ResPathExplorer import rename_file
+from src.ResPathExplorer.rename_file import rename_file
 
 
 class TestRenameFile(TestCase):
