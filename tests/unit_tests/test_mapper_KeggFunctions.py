@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, mock_open, MagicMock
 from src.ResPathExplorer.mapper_KeggFunctions import search_gene_id_kegg, get_gene_name_by_kegg_id
-import pandas as pd
+
 
 class Testmapper_KeggFunctions:
 
