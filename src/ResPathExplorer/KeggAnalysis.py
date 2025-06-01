@@ -1,7 +1,7 @@
 import os
 import re
 import requests
-from src.ResPathExplorer import rename_file
+from src.ResPathExplorer.rename_file import rename_file
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
