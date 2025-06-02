@@ -154,45 +154,35 @@ class CARDAnalysis:
         else:
             raise AttributeError("ARGdf is not initialized.")
 
-    def plot_antibiotic_frequencies(
-            self,
-            df: pd.DataFrame,
-            label_fontsize: int = 10,
-            bar_color: str = 'green',
-            bar_width: float = 0.8,
-            save: bool = True,
-            filename: str = "frequency_antibiotics_plot.png"
-    ) -> None:
+    def plot_antibiotic_frequencies(self, df: pd.DataFrame, label_fontsize: int = 10,
+                                bar_color: str = 'green', bar_width: float = 0.8) -> None:
         """
-        Plots and optionally saves the relative frequency of antibiotics associated with resistance genes.
+        Plots the frequency of antibiotics found in genes as a bar chart.
         """
-        import os
-
-        if 'Antibiotics' not in df.columns:
-            raise ValueError("DataFrame must contain an 'Antibiotics' column.")
-
+        # Filter out entries without antibiotics
         df_exploded = df[df['Antibiotics'].notna()]
         df_exploded = df_exploded['Antibiotics'].str.split(',').explode().str.strip()
 
+        # Count occurrences of each antibiotic
         antibiotic_counts = df_exploded.value_counts()
-        relative_frequencies = (antibiotic_counts / len(df_exploded)) * 100
 
+        # Calculate the relative frequency (as a percentage)
+        relative_frequencies = (antibiotic_counts / len(df)) * 100
+
+        # Create the bar plot with custom bar width
         plt.figure(figsize=(10, 8))
         sns.barplot(x=relative_frequencies.values, y=relative_frequencies.index,
                     color=bar_color, width=bar_width)
 
+        # Add style and labels
         plt.title('Frequency of Antibiotics Found in Genes', fontsize=16, fontweight='bold')
         plt.xlabel('Frequency of Resistant Genes (%)', fontsize=14)
         plt.ylabel('Antibiotic', fontsize=14)
         plt.xticks(fontsize=12)
         plt.yticks(fontsize=label_fontsize)
+
+        # Adjust layout
         plt.tight_layout()
 
-        if save:
-            output_folder = "."
-            os.makedirs(output_folder, exist_ok=True)
-            save_path = os.path.join(output_folder, filename)
-            plt.savefig(save_path, dpi=300, bbox_inches='tight')
-            print(f"Plot saved to: {os.path.abspath(save_path)}")
-
+        # Show the plot
         plt.show()
