@@ -286,7 +286,6 @@ class KeggAnalysis:
         plot_path = os.path.join(name_outdir, f"{outplot_file_name}_{plot_type}.png")
         plt.savefig(plot_path, bbox_inches='tight')
         plt.show()
-        plt.close()
 
     def search_gene_path(
             self,

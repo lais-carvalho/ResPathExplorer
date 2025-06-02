@@ -60,7 +60,7 @@ class CARDAnalysis:
         with tarfile.open(zip_filename, "r:bz2") as tar:
             for member in tar.getmembers():
                 if obo_filename in member.name:
-                    tar.extract(member, path="..")
+                    tar.extract(member, path=".")
                     print(f"Download and extraction complete: {member.name}")
                     break
 
