@@ -157,8 +157,11 @@ class CARDAnalysis:
     def plot_antibiotic_frequencies(self, df: pd.DataFrame, label_fontsize: int = 10,
                                     bar_color: str = 'green', bar_width: float = 0.8) -> None:
         """
-        Plots the relative frequency of antibiotics associated with resistance genes.
+        Plots the relative frequency of antibiotics associated with resistance genes,
+        and saves the plot to the current directory.
         """
+        import os
+
         if 'Antibiotics' not in df.columns:
             raise ValueError("DataFrame must contain an 'Antibiotics' column.")
 
@@ -166,7 +169,7 @@ class CARDAnalysis:
         df_exploded = df_exploded['Antibiotics'].str.split(',').explode().str.strip()
 
         antibiotic_counts = df_exploded.value_counts()
-        relative_frequencies = (antibiotic_counts / len(df)) * 100
+        relative_frequencies = (antibiotic_counts / len(df_exploded)) * 100
 
         plt.figure(figsize=(10, 8))
         sns.barplot(x=relative_frequencies.values, y=relative_frequencies.index,
@@ -178,4 +181,12 @@ class CARDAnalysis:
         plt.xticks(fontsize=12)
         plt.yticks(fontsize=label_fontsize)
         plt.tight_layout()
+
+        # Salvar na pasta atual
+        output_folder = "."
+        os.makedirs(output_folder, exist_ok=True)
+        save_path = os.path.join(output_folder, "frequency_antibiotics_plot.png")
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        print(f"Plot saved to: {os.path.abspath(save_path)}")
+
         plt.show()
