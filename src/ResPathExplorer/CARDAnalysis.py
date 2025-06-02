@@ -154,11 +154,17 @@ class CARDAnalysis:
         else:
             raise AttributeError("ARGdf is not initialized.")
 
-    def plot_antibiotic_frequencies(self, df: pd.DataFrame, label_fontsize: int = 10,
-                                    bar_color: str = 'green', bar_width: float = 0.8) -> None:
+    def plot_antibiotic_frequencies(
+            self,
+            df: pd.DataFrame,
+            label_fontsize: int = 10,
+            bar_color: str = 'green',
+            bar_width: float = 0.8,
+            save: bool = True,
+            filename: str = "frequency_antibiotics_plot.png"
+    ) -> None:
         """
-        Plots the relative frequency of antibiotics associated with resistance genes,
-        and saves the plot to the current directory.
+        Plots and optionally saves the relative frequency of antibiotics associated with resistance genes.
         """
         import os
 
@@ -182,11 +188,11 @@ class CARDAnalysis:
         plt.yticks(fontsize=label_fontsize)
         plt.tight_layout()
 
-        # Salvar na pasta atual
-        output_folder = "."
-        os.makedirs(output_folder, exist_ok=True)
-        save_path = os.path.join(output_folder, "frequency_antibiotics_plot.png")
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
-        print(f"Plot saved to: {os.path.abspath(save_path)}")
+        if save:
+            output_folder = "."
+            os.makedirs(output_folder, exist_ok=True)
+            save_path = os.path.join(output_folder, filename)
+            plt.savefig(save_path, dpi=300, bbox_inches='tight')
+            print(f"Plot saved to: {os.path.abspath(save_path)}")
 
         plt.show()
