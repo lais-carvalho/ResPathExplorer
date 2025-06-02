@@ -1,6 +1,6 @@
 from bioservices import KEGG
 from typing import Dict, Optional
-from src.ResPathExplorer.validate_color_code import validate_color_code
+from .validate_color_code import validate_color_code
 
 
 def get_url_pathway(
