@@ -43,6 +43,8 @@ class TestCARDAnalysis(unittest.TestCase):
 
         self.assertIsNotNone(result)
         self.assertEqual(result["Gene Name"], "beta-lactamase")
+        self.assertEqual(result["Matched Name"], "blaTEM")  # <- NOVO TESTE
+        self.assertIn("blaTEM", result["All Synonyms"])  # <- NOVO TESTE
         self.assertIn("Penicillin", result["Antibiotics"])
 
         os.remove(tmp_file)

@@ -161,7 +161,7 @@ class VFDBAnalysis:
         for gene in important_genes:
             filtered = self.df_genes[
                 (self.df_genes['Bacteria'].str.contains(bacteria, case=False, na=False)) &
-                (self.df_genes['Gene_Name'].str.contains(gene, case=False, na=False))
+                (self.df_genes['Gene_Name'].str.lower() == gene.lower())
             ]
             df_result = pd.concat([df_result, filtered], ignore_index=True)
         return df_result

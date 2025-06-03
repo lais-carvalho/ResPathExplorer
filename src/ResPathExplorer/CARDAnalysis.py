@@ -1,5 +1,6 @@
 import requests
 import os
+import re
 import tarfile
 import pandas as pd
 import seaborn as sns
@@ -68,7 +69,7 @@ class CARDAnalysis:
 
     def find_gene_ids(self, obo_file: str, gene_name: str) -> Optional[dict]:
         """
-        Searches the `aro.obo` file for a gene and returns its annotation metadata.
+        Searches the `aro.obo` file for a gene and returns its annotation metadata
         """
         if not os.path.exists(obo_file):
             raise FileNotFoundError(f"File not found: {obo_file}")
@@ -93,10 +94,12 @@ class CARDAnalysis:
                 current_name = line.split(": ", 1)[1]
                 current_synonyms = []
 
+
             elif line.startswith("synonym: "):
-                synonym_full = line.split('"')[1]
-                synonyms_split = [s.strip() for s in synonym_full.split(",")]
-                current_synonyms.extend(synonyms_split)
+                match = re.search(r'^synonym: "([^"]+)"', line)
+                if match:
+                    synonyms_split = [s.strip() for s in match.group(1).split(",")]
+                    current_synonyms.extend(synonyms_split)
 
             elif line.startswith("def: "):
                 current_description = line.split(": ", 1)[1] if ": " in line else ""
@@ -108,13 +111,17 @@ class CARDAnalysis:
             elif line == "[Term]" and current_name:
                 all_names = [current_name] + current_synonyms
 
-                if any(gene_name.lower() == name.lower() for name in all_names):
-                    gene_occurrences.append({
-                        "Gene Name": current_name,
-                        "Gene ID": current_id,
-                        "Description": current_description or " ",
-                        "Antibiotics": ", ".join(current_antibiotics) if current_antibiotics else pd.NA
-                    })
+                for name in all_names:
+                    if gene_name.lower() == name.lower():
+                        gene_occurrences.append({
+                            "Gene Name": current_name,
+                            "Matched Name": name,
+                            "Gene ID": current_id,
+                            "Description": current_description or " ",
+                            "Antibiotics": ", ".join(current_antibiotics) if current_antibiotics else pd.NA,
+                            "All Synonyms": ", ".join(current_synonyms) if current_synonyms else pd.NA
+                        })
+                        break
 
                 # Reset
                 current_id = None
@@ -159,7 +166,9 @@ class CARDAnalysis:
         """
         Plots the frequency of antibiotics found in genes as a bar chart.
         """
-        # Filter out entries without antibiotics
+        if "Antibiotics" not in df.columns:
+            raise ValueError("DataFrame must contain an 'Antibiotics' column.")
+
         df_exploded = df[df['Antibiotics'].notna()]
         df_exploded = df_exploded['Antibiotics'].str.split(',').explode().str.strip()
 
