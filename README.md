@@ -6,7 +6,7 @@ A modular Python library for functional analysis of microbial genes using curate
 
 - Functional Mapping: Annotate genes using KEGG, CARD, and VFDB.
 
-- Enrichment Analysis: Perform pathway enrichment from ranked gene lists.
+- Enrichment Analysis: Perform pathway enrichment from gene lists.
 
 - Pathway-Level Analysis: Visualize gene distribution across biological pathways.
 
@@ -17,3 +17,52 @@ A modular Python library for functional analysis of microbial genes using curate
 - Extensible Pipeline: Modular design for easy integration into broader omics workflows.
 
 - Visualization Tools: Built-in plots for resistance profiles, virulence categories, enrichment results, and KEGG pathways.
+
+## Examples
+You can find full working examples in the `Exemples/` folder:
+
+#### `Exemple 01/`:
+
+Comparative Analysis of Transcriptomic Response of Escherichia coli K-12 MG1655 to Nine Representative Classes of Antibiotics
+
+doi: 10.1128/spectrum.00317-23
+
+- The exemple was done just for the IPM antibiotic
+
+`pepare_data_exemplo01.ipynb`: Preparing data for analysis.
+
+`Analysis_exemple01.ipynb`: ResPathExplorer aplication.
+
+#### `Exemple 02/`:
+
+Establishment and characterization of persistent Pseudomonas aeruginosa infections in air–liquid interface cultures of human airway epithelial cells.
+
+doi: https://doi.org/10.1128/iai.00603-24
+
+- The exemple was done for the Calu-3 PAO1 Day 5 vs Inoculum
+
+`pepare_data_exemplo02.ipynb`: Preparing data for analysis.
+
+`Analysis_exemple02.ipynb`: ResPathExplorer aplication.
+
+## 🛠 Installation
+
+To install the library directly from GitHub:
+
+```bash
+pip install git+https://github.com/lais-carvalho/ResPathExplorer.git
+```
+
+## Acknowledgements
+- European Food Safety Authority (EFSA) – support via the “Pathogens-in-Foods Database” project.
+
+- Centro de Investigação da Montanha (CIMO), Portugal.
+
+- University of Minho – MSc in Bioinformatics program.
+
+## Contact
+For questions or collaborations, open a GitHub Issue or contact: laiscarvalho@ipb.pt
+                                                                 linkedin.com/in/laiscristinecarvalho
+
+
+
