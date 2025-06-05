@@ -33,6 +33,25 @@ doi: 10.1128/spectrum.00317-23
 
 `Analysis_exemple01.ipynb`: ResPathExplorer aplication.
 
+## Structure
+```text
+📁 ResPathExplorer/
+├── 📁 Exemples/
+│   ├── 📁 Exemple 01/
+│   └── 📁 Exemple 02/
+├── 📁 src/ResPathExplorer/
+│   ├── CARDAnalysis.py
+│   ├── KeggAnalysis.py
+│   ├── URL_pathway.py
+│   ├── VFDBAnalysis.py
+│   ├── __init__.py
+│   ├── mapper_KeggFunctions.py
+│   ├── rename_file.py
+│   ├── save_df_as_html.py
+│   └── validate_color_code.py
+├── 📁 tests/
+```
+
 #### `Exemple 02/`:
 
 Establishment and characterization of persistent Pseudomonas aeruginosa infections in air–liquid interface cultures of human airway epithelial cells.
