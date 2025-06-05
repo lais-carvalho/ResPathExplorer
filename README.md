@@ -81,6 +81,7 @@ pip install git+https://github.com/lais-carvalho/ResPathExplorer.git
 
 ## Contact
 For questions or collaborations, open a GitHub Issue or contact: laiscarvalho@ipb.pt
+
                                                                  linkedin.com/in/laiscristinecarvalho
 
 
