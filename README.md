@@ -36,9 +36,6 @@ doi: 10.1128/spectrum.00317-23
 ## Structure
 ```text
 📁 ResPathExplorer/
-├── 📁 Exemples/
-│   ├── 📁 Exemple 01/
-│   └── 📁 Exemple 02/
 ├── 📁 src/ResPathExplorer/
 │   ├── CARDAnalysis.py
 │   ├── KeggAnalysis.py
@@ -49,6 +46,9 @@ doi: 10.1128/spectrum.00317-23
 │   ├── rename_file.py
 │   ├── save_df_as_html.py
 │   └── validate_color_code.py
+├── 📁 Exemples/
+│   ├── 📁 Exemple 01/
+│   └── 📁 Exemple 02/
 ├── 📁 tests/
 ```
 
