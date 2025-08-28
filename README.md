@@ -19,19 +19,19 @@ A modular Python library for functional analysis of microbial genes using curate
 - Visualization Tools: Built-in plots for resistance profiles, virulence categories, enrichment results, and KEGG pathways.
 
 ## Examples
-You can find full working examples in the `Exemples/` folder:
+You can find full working examples in the `Examples/` folder:
 
-#### `Exemple 01/`:
+#### `Foodborne bacteria/`:
 
-Comparative Analysis of Transcriptomic Response of Escherichia coli K-12 MG1655 to Nine Representative Classes of Antibiotics
+Transcriptome Analysis of *Listeria monocytogenes* Exposed to Beef Fat Reveals Antimicrobial and Pathogenicity Attenuation Mechanisms
 
-doi: 10.1128/spectrum.00317-23
+doi: https://doi.org/10.1128/AEM.03027-20
 
-- The exemple was done just for the IPM antibiotic
+- The example was done just for C18:2n-6
 
-`pepare_data_exemplo01.ipynb`: Preparing data for analysis.
+`pepare_data.ipynb`: Preparing data for analysis.
 
-`Analysis_exemple01.ipynb`: ResPathExplorer aplication.
+`Analysis.ipynb`: ResPathExplorer aplication.
 
 ## Structure
 ```text
@@ -46,23 +46,10 @@ doi: 10.1128/spectrum.00317-23
 │   ├── rename_file.py
 │   ├── save_df_as_html.py
 │   └── validate_color_code.py
-├── 📁 Exemples/
-│   ├── 📁 Exemple 01/
-│   └── 📁 Exemple 02/
+├── 📁 Examples/
+│   ├── 📁 Foodborne bacteria/
 ├── 📁 tests/
 ```
-
-#### `Exemple 02/`:
-
-Establishment and characterization of persistent Pseudomonas aeruginosa infections in air–liquid interface cultures of human airway epithelial cells.
-
-doi: https://doi.org/10.1128/iai.00603-24
-
-- The exemple was done for the Calu-3 PAO1 Day 5 vs Inoculum
-
-`pepare_data_exemplo02.ipynb`: Preparing data for analysis.
-
-`Analysis_exemple02.ipynb`: ResPathExplorer aplication.
 
 ## 🛠 Installation
 
@@ -81,8 +68,9 @@ pip install git+https://github.com/lais-carvalho/ResPathExplorer.git
 
 ## Contact
 For questions or collaborations, open a GitHub Issue or contact: laiscarvalho@ipb.pt
+                                                                 laismagalhaescarvalho@hotmail.com
+                                                                 linkedin.com/in/laiscristinecarvalho
 
-                                                              linkedin.com/in/laiscristinecarvalho
 
 
 
